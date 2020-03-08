@@ -100,7 +100,8 @@ def basic_stats(G, area=None, clean_intersects=False, tolerance=15,
     m = len(list(G.edges()))
 
     # calculate the average degree of the graph
-    k_avg = 2 * m / n
+    # k_avg = 2 * m / n
+    
 
     if 'streets_per_node' in G.graph:
         # get the degrees saved as a graph attribute (from an undirected
@@ -112,7 +113,13 @@ def basic_stats(G, area=None, clean_intersects=False, tolerance=15,
     else:
         # count how many street segments emanate from each node in this graph
         streets_per_node = count_streets_per_node(G)
-
+    
+    # calculate the average degree of the graph defined as the sum of all 
+    # the degrees for each node devided by the number of nodes
+    total_degrees = sum(streets_per_node.values())
+    k_avg = total_degrees/n
+    
+    
     # count number of intersections in graph, as nodes with >1 street emanating
     # from them
     node_ids = set(G.nodes())
